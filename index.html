@@ -2,7 +2,7 @@
     <title>My Favourite Movies</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <style>
-        /* Estilos generales */
+        
         body {
             --primary: #214511;
             --secondary: #29b6f6;
@@ -101,7 +101,7 @@
             font-size: 12px;
         }
 
-        /* Estilos específicos para el buscador */
+       
         #search-container {
             display: flex;
             flex-direction: column;
@@ -139,25 +139,25 @@
         }
         button.search,
         button.index {
-            padding: 10px 20px; /* Espaciado para que el botón tenga suficiente área */
-            font-size: 14px; /* Tamaño de texto adecuado */
-            font-weight: bold; /* Texto más destacado */
-            border: 1px solid var(--primary); /* Borde en verde */
-            border-radius: 5px; /* Bordes redondeados */
-            background-color: #214511; /* Fondo del botón */
-            color: white; /* Texto en blanco */
+            padding: 10px 20px; 
+            font-size: 14px; 
+            font-weight: bold; 
+            border: 1px solid var(--primary); 
+            border-radius: 5px; 
+            background-color: #214511; 
+            color: white; 
             cursor: pointer;
-            display: flex; /* Hacemos que el contenido interno del botón sea flexible */
-            align-items: center; /* Centramos verticalmente el texto */
-            justify-content: center; /* Centramos horizontalmente el texto */
-            transition: all 0.3s ease-in-out; /* Animación para hover */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle un efecto visual */
+            display: flex;
+            align-items: center; 
+            justify-content: center; 
+            transition: all 0.3s ease-in-out; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
         }
         
         button.search:hover,
         button.index:hover {
-            background-color: #163a0b; /* Color más oscuro al pasar el ratón */
-            transform: scale(1.05); /* Ligera ampliación para resaltar */
+            background-color: #163a0b;
+            transform: scale(1.05); 
         }
 
         #search-results {
@@ -316,7 +316,7 @@
             const director = document.getElementById('director').value.trim();
             let thumbnail = document.getElementById('thumbnail').value.trim();
         
-            // Si el thumbnail no comienza con "http", se asume como una ruta local
+            
             if (!thumbnail.startsWith("http")) {
                 thumbnail = `files/${thumbnail.replace(/^files\//, '')}`;
             }
@@ -345,7 +345,7 @@
             const director = document.getElementById('director').value.trim();
             let thumbnail = document.getElementById('thumbnail').value.trim();
         
-            // Si el thumbnail no comienza con "http", se asume como una ruta local
+            
             if (!thumbnail.startsWith("http")) {
                 thumbnail = `files/${thumbnail.replace(/^files\//, '')}`;
             }
@@ -385,7 +385,7 @@
             }
         };
 
-        // Nuevo
+        
         const searchView = () => {
             return `
                 <h2>Search for a Movie</h2>
