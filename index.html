@@ -2,193 +2,179 @@
     <title>My Favourite Movies</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <style>
-        body { 
-            --primary: #4CAF50; /* Suave tono verde */
-            --secondary: #FFC107; /* Amarillo cálido */
-            --background: #F9F9F9; /* Fondo claro */
-            --card-bg: #FFFFFF; /* Fondo blanco para tarjetas */
+        /* Estilos generales */
+        body {
+            --primary: #214511;
+            --secondary: #29b6f6;
             margin: 0px;
-            background: var(--background);
-            color: #333; /* Texto oscuro */
         }
-    
         * {
             font-family: 'Roboto', sans-serif;
         }
-    
-        button { 
+        button {
+            -webkit-font-smoothing: antialiased;
             display: inline-block;
             text-decoration: none;
-            margin: 5px;
-            color: white;
-            background: var(--primary);
-            border: none;
-            height: 30px;
-            font-size: 12px;
+            margin: 2px;
+            color: var(--primary);
+            background: white;
+            border: 1px solid var(--primary);
+            height: 20px;
+            font-size: 9px;
             text-transform: uppercase;
             cursor: pointer;
             transition: ease-in 0.2s all;
-            padding: 0 12px;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 0 8px 0 8px;
         }
-    
-        button:hover { 
-            background: var(--secondary);
-            color: white;
-        }
-
-        div#search-bar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin: 20px auto;
-            padding: 10px;
-            width: 80%;
-            max-width: 800px;
-        }
-
-        div#search-bar input {
-            flex: 1;
-            padding: 10px;
-            font-size: 14px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    
-        div#search-results {
-            text-align: center;
-            margin-top: 20px;
-        }
-    
-        div#search-results p {
-            font-size: 14px;
-            color: #666;
-        }
-
         button.index {
-            background: var(--secondary);
-            color: white;
-            padding: 8px 16px;
-            font-size: 14px;
-            border-radius: 5px;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-        }
-        
-        button.index:hover {
             background: var(--primary);
             color: white;
-        }
-
-        button.search-view {
-            background: var(--secondary);
-            color: white;
-            padding: 10px 20px;
-            font-size: 14px;
-            border-radius: 5px;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
+            border: 1px solid var(--primary);
+            padding: 0 8px;
+            height: 20px;
+            font-size: 9px;
             text-transform: uppercase;
+            cursor: pointer;
+            transition: ease-in 0.2s all;
         }
-        
-        button.search-view:hover {
-            background: var(--primary);
-            color: white;
+        button.index:hover {
+            background: white;
+            color: var(--primary);
         }
-    
         div#main {
-            padding: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+            padding: 10px;
         }
-    
+        input {
+            margin-bottom: 5px;
+            margin-top: 2px;
+            padding: 4px;
+            font-size: 12px;
+        }
         h1 {
             background: var(--primary);
             color: white;
             font-weight: 300;
-            font-size: 24px;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
+            font-size: 20px;
+            margin: 0px;
+            padding: 15px;
         }
-    
         h2 {
-            margin-block-start: 0;
+            margin-block-start: 0px;
             margin-block-end: 10px;
-            font-size: 22px;
+            font-size: 20px;
             color: var(--primary);
-            text-align: center;
         }
-    
+        button:hover {
+            background: var(--primary);
+            color: white;
+        }
+        div.actions {
+            margin-top: 10px;
+        }
         div.movie {
             display: inline-block;
-            width: 220px;
-            background: var(--card-bg);
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            width: auto;
+            padding: 10px;
+            box-shadow: 2px 2px 7px #ccc;
+            margin: 5px;
         }
-    
-        div.movie:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-    
         div.movie div.movie-img {
-            width: 100%;
+            width: 200px;
             height: auto;
-            min-height: 300px;
-            overflow: hidden;
-            border-radius: 8px;
+            min-height: 200px;
+            cursor: pointer;
         }
-    
         div.movie div.movie-img img {
             width: 100%;
             height: auto;
-            object-fit: cover;
         }
-    
         div.movie div.title {
             text-align: center;
-            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 200px;
+            white-space: nowrap;
+        }
+        div.field {
             color: var(--primary);
-            margin-top: 10px;
-            font-size: 16px;
-            text-transform: capitalize;
+            text-transform: uppercase;
+            font-size: 12px;
         }
-    
-        div.actions {
+
+        /* Estilos específicos para el buscador */
+        #search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 50px;
+            padding: 20px;
             text-align: center;
-            margin-top: 10px;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-    
-        input {
-            margin-bottom: 10px;
-            margin-top: 5px;
-            padding: 8px;
-            font-size: 14px;
+        #search-container h2 {
+            color: #214511;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+        #search-query {
+            padding: 12px;
             width: 80%;
-            border: 1px solid #ccc;
+            font-size: 16px;
+            border: 2px solid #214511;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-    
-        div#search-results {
-            text-align: center;
-            margin-top: 20px;
+        button.search,
+        button.index {
+            padding: 10px 20px; /* Espaciado para que el botón tenga suficiente área */
+            font-size: 14px; /* Tamaño de texto adecuado */
+            font-weight: bold; /* Texto más destacado */
+            border: 1px solid var(--primary); /* Borde en verde */
+            border-radius: 5px; /* Bordes redondeados */
+            background-color: #214511; /* Fondo del botón */
+            color: white; /* Texto en blanco */
+            cursor: pointer;
+            display: flex; /* Hacemos que el contenido interno del botón sea flexible */
+            align-items: center; /* Centramos verticalmente el texto */
+            justify-content: center; /* Centramos horizontalmente el texto */
+            transition: all 0.3s ease-in-out; /* Animación para hover */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle un efecto visual */
         }
-    
-        div#search-results p {
-            font-size: 14px;
+        
+        button.search:hover,
+        button.index:hover {
+            background-color: #163a0b; /* Color más oscuro al pasar el ratón */
+            transform: scale(1.05); /* Ligera ampliación para resaltar */
+        }
+
+        #search-results {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             color: #666;
+            font-size: 16px;
+            text-align: left;
+        }
+        #search-results p {
+            margin: 0;
+            font-style: italic;
         }
     </style>
 
@@ -403,18 +389,17 @@
         const searchView = () => {
             return `
                 <h2>Search for a Movie</h2>
-                <div style="text-align: center;">
+                <div style="display: flex; justify-content: center; gap: 10px;">
                     <input type="text" id="search-query" placeholder="Enter movie title" />
                     <button class="search">Search</button>
+                    <button class="index">Back</button> <!-- Botón Back agregado -->
                 </div>
-                <div id="search-results" style="margin-top: 20px;">
+                <div id="search-results">
                     <p>No search results yet. Please enter a movie title and press search.</p>
-                </div>
-                <div class="actions" style="margin-top: 20px; text-align: center;">
-                    <button class="index">Back</button>
                 </div>
             `;
         };
+
         const searchContr = () => {
             const query = document.getElementById('search-query').value.trim();
             if (!query) {
@@ -451,25 +436,29 @@
         
 
         const resultsView = (results) => {
-    let view = `
-        <h2>Search Results</h2>
-        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
-    `;
-    results.forEach(movie => {
-        view += `
-            <div class="movie-result" style="margin: 10px; border: 1px solid #ccc; padding: 10px; width: 200px; text-align: center;">
-                <img src="https://image.tmdb.org/t/p/w200${movie.poster_path || ""}" 
-                     alt="${movie.title}" style="width: 100%; height: auto;" />
-                <h3>${movie.title}</h3>
-                <p>Release Date: ${movie.release_date || "N/A"}</p>
-                <button class="add-from-api" data-movie='${JSON.stringify(movie)}'>Add</button>
-            </div>
-        `;
-    });
-    view += `</div>`;
-    document.getElementById('search-results').innerHTML = view;
-};
-
+            let view = `
+                <h2>Search Results</h2>
+                <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;">
+                    <input type="text" id="search-query" placeholder="Enter movie title" />
+                    <button class="search">Search</button>
+                    <button class="index">Back</button> <!-- Botón Back agregado -->
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+            `;
+            results.forEach(movie => {
+                view += `
+                    <div class="movie-result" style="margin: 10px; border: 1px solid #ccc; padding: 10px; width: 200px; text-align: center;">
+                        <img src="https://image.tmdb.org/t/p/w200${movie.poster_path || ""}" 
+                             alt="${movie.title}" style="width: 100%; height: auto;" />
+                        <h3>${movie.title}</h3>
+                        <p>Release Date: ${movie.release_date || "N/A"}</p>
+                        <button class="add-from-api" data-movie='${JSON.stringify(movie)}'>Add</button>
+                    </div>
+                `;
+            });
+            view += `</div>`;
+            document.getElementById('main').innerHTML = view; 
+        };
 
 
         const addFromAPIContr = (movieData) => {
@@ -496,7 +485,7 @@
         };
         
 
-
+        // End nuevo
 
 
 
@@ -530,8 +519,9 @@
 
 <body>
 
-    <h1>CineList</h1>
+    <h1>CINELIST</h1>
     <div id="main"> <!-- The view is included here --> </div>
+   
 
     
 </body>
