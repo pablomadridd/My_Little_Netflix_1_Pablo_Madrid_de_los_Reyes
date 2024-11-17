@@ -113,7 +113,6 @@
             background: var(--primary);
             color: white;
             font-weight: 300;
-            text-transform: uppercase;
             font-size: 24px;
             margin: 0;
             padding: 20px;
@@ -423,12 +422,12 @@
                 return;
             }
             
-            const apiKey = '1cd433a5a1670216a3daa0882ca24975'; // La misma clave que usaste en el archivo de prueba
+            const apiKey = '1cd433a5a1670216a3daa0882ca24975'; 
             
             fetch(`https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&api_key=${apiKey}`, {
                 method: 'GET',
                 headers: {
-                    accept: 'application/json', // Este encabezado es suficiente
+                    accept: 'application/json', 
                 },
             })
                 .then(response => {
@@ -497,7 +496,7 @@
         };
         
 
-        // End nuevo
+
 
 
 
@@ -531,7 +530,7 @@
 
 <body>
 
-    <h1>My Favourite Movies</h1>
+    <h1>CineList</h1>
     <div id="main"> <!-- The view is included here --> </div>
 
     
