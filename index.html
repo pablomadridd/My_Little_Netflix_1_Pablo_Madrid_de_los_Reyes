@@ -219,7 +219,9 @@
                         <button class="new">Add Movie</button>
                         <button class="reset">Reset</button>
                         <button class="search-view">Search Movies</button>
+                        <button class="my-keywords">My Keywords</button>
                      </div>`;
+            
 
             
         
@@ -292,6 +294,104 @@
                 </div>
             `;
         };
+
+        const keywordsView = (movieId) => {
+            const apiKey = '1cd433a5a1670216a3daa0882ca24975';
+            const options = {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json'
+                }
+            };
+        
+            fetch(`https://api.themoviedb.org/3/movie/${movieId}/keywords?api_key=${apiKey}`, options)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Procesar las palabras clave
+                    const keywords = processKeywords(data.keywords);
+                    
+                    // Crear la vista
+                    let view = `
+                        <h2>Keywords for Movie</h2>
+                        <ul style="list-style: none; padding: 0;">
+                    `;
+                    keywords.forEach(keyword => {
+                        view += `
+                            <li style="margin-bottom: 10px;">
+                                ${keyword} 
+                                <button class="add-keyword" data-keyword="${keyword}">Add to my list</button>
+                            </li>
+                        `;
+                    });
+                    view += `</ul>
+                        <button class="index">Back</button>
+                    `;
+                    document.getElementById('main').innerHTML = view;
+                })
+                .catch(err => {
+                    console.error('Error fetching keywords:', err);
+                    alert("An error occurred while fetching keywords. Please try again later.");
+                });
+        };
+
+
+
+
+        const processKeywords = (keywords) => {
+            const cleanedKeywords = keywords
+                .map(keywordObj => keywordObj.name) // Extrae el nombre de las keywords
+                .filter(name => !!name) // Elimina valores nulos o vacíos
+                .map(name => cleanKeyword(name)); // Limpia y normaliza las keywords
+        
+            return [...new Set(cleanedKeywords)]; // Elimina duplicados
+        };
+        
+        const cleanKeyword = (keyword) => {
+            return keyword
+                .replace(/[^a-zñáéíóú0-9 ]+/igm, "")  // Quita caracteres especiales
+                .trim()                                // Quita espacios al inicio y final
+                .toLowerCase();                        // Convierte a minúsculas
+        };
+
+        const myKeywordsView = () => {
+            let customKeywords = JSON.parse(localStorage.customKeywords || "[]");
+        
+            let view = `
+                <h2>My Keywords</h2>
+                <ul style="list-style: none; padding: 0;">
+            `;
+            customKeywords.forEach(keyword => {
+                view += `
+                    <li style="margin-bottom: 10px;">
+                        ${keyword}
+                        <button class="remove-keyword" data-keyword="${keyword}" style="margin-left: 10px;">Remove</button>
+                    </li>
+                `;
+            });
+            view += `</ul>
+                <button class="index">Back</button>
+            `;
+        
+            document.getElementById('main').innerHTML = view;
+        };
+        
+        const removeKeywordFromList = (keyword) => {
+            let customKeywords = JSON.parse(localStorage.customKeywords || "[]");
+            customKeywords = customKeywords.filter(k => k !== keyword); // Filtra la palabra clave
+            localStorage.customKeywords = JSON.stringify(customKeywords); // Guarda los cambios
+            alert(`Keyword "${keyword}" removed from your list.`);
+            myKeywordsView(); // Refresca la vista
+        };
+
+
+
+        
+
 
 
 
@@ -459,6 +559,7 @@
                              alt="${movie.title}" style="width: 100%; height: auto;" />
                         <h3>${movie.title}</h3>
                         <p>Release Date: ${movie.release_date || "N/A"}</p>
+                        <button class="keywords" data-my-id="${movie.id}">View Keywords</button>
                         <button class="add-from-api" data-movie='${sanitizedMovie}'>Add</button>
                     </div>
                 `;
@@ -501,7 +602,18 @@
             indexContr();
         };
         
-
+        const addKeywordToList = (keyword) => {
+            let customKeywords = JSON.parse(localStorage.customKeywords || "[]");
+        
+            if (!customKeywords.includes(keyword)) {
+                customKeywords.push(keyword); // Añade la palabra clave si no está en la lista
+                localStorage.customKeywords = JSON.stringify(customKeywords); // Guarda en localStorage
+                alert(`Keyword "${keyword}" added to your list!`);
+            } else {
+                alert(`Keyword "${keyword}" is already in your list.`);
+            }
+        };
+        
         // End nuevo
 
     
@@ -531,6 +643,10 @@
             else if (matchEvent(ev, '.search-view')) {
                 document.getElementById('main').innerHTML = searchView();
             }
+            else if (matchEvent(ev, '.add-keyword')) addKeywordToList(ev.target.dataset.keyword);
+            else if (matchEvent(ev, '.my-keywords')) myKeywordsView();
+            else if (matchEvent(ev, '.remove-keyword')) removeKeywordFromList(ev.target.dataset.keyword);
+            else if (matchEvent(ev, '.keywords')) keywordsView(myId(ev));
         });
         
 
