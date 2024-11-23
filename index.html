@@ -312,10 +312,8 @@
                     return response.json();
                 })
                 .then(data => {
-                    // Procesar las palabras clave
                     const keywords = processKeywords(data.keywords);
                     
-                    // Crear la vista
                     let view = `
                         <h2>Keywords for Movie</h2>
                         <ul style="list-style: none; padding: 0;">
@@ -344,18 +342,18 @@
 
         const processKeywords = (keywords) => {
             const cleanedKeywords = keywords
-                .map(keywordObj => keywordObj.name) // Extrae el nombre de las keywords
-                .filter(name => !!name) // Elimina valores nulos o vacíos
-                .map(name => cleanKeyword(name)); // Limpia y normaliza las keywords
+                .map(keywordObj => keywordObj.name)
+                .filter(name => !!name) 
+                .map(name => cleanKeyword(name)); 
         
-            return [...new Set(cleanedKeywords)]; // Elimina duplicados
+            return [...new Set(cleanedKeywords)]; 
         };
         
         const cleanKeyword = (keyword) => {
             return keyword
-                .replace(/[^a-zñáéíóú0-9 ]+/igm, "")  // Quita caracteres especiales
-                .trim()                                // Quita espacios al inicio y final
-                .toLowerCase();                        // Convierte a minúsculas
+                .replace(/[^a-zñáéíóú0-9 ]+/igm, "")  
+                .trim()                               
+                .toLowerCase();               
         };
 
         const myKeywordsView = () => {
@@ -382,10 +380,10 @@
         
         const removeKeywordFromList = (keyword) => {
             let customKeywords = JSON.parse(localStorage.customKeywords || "[]");
-            customKeywords = customKeywords.filter(k => k !== keyword); // Filtra la palabra clave
-            localStorage.customKeywords = JSON.stringify(customKeywords); // Guarda los cambios
+            customKeywords = customKeywords.filter(k => k !== keyword); 
+            localStorage.customKeywords = JSON.stringify(customKeywords); 
             alert(`Keyword "${keyword}" removed from your list.`);
-            myKeywordsView(); // Refresca la vista
+            myKeywordsView(); 
         };
 
 
@@ -574,23 +572,20 @@
             const movie = JSON.parse(movieData);
             let my_movies = JSON.parse(localStorage.my_movies || "[]");
         
-            // Verifica si los datos necesarios están disponibles
             if (!movie.id || !movie.title) {
                 alert("Cannot add this movie because some necessary data is missing.");
                 return;
             }
         
-            // Verifica si la película ya existe en base al id
             if (my_movies.some(m => m.id === movie.id)) {
                 alert("This movie is already in your database.");
                 return;
             }
         
-            // Crea el nuevo objeto de película con manejo de campos opcionales
             const newMovie = {
                 id: movie.id,
                 title: movie.title,
-                director: "Unknown", // TMDb no proporciona director
+                director: "Unknown", 
                 thumbnail: movie.poster_path 
                     ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` 
                     : "files/noimage.png"
@@ -606,8 +601,8 @@
             let customKeywords = JSON.parse(localStorage.customKeywords || "[]");
         
             if (!customKeywords.includes(keyword)) {
-                customKeywords.push(keyword); // Añade la palabra clave si no está en la lista
-                localStorage.customKeywords = JSON.stringify(customKeywords); // Guarda en localStorage
+                customKeywords.push(keyword); 
+                localStorage.customKeywords = JSON.stringify(customKeywords); 
                 alert(`Keyword "${keyword}" added to your list!`);
             } else {
                 alert(`Keyword "${keyword}" is already in your list.`);
