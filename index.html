@@ -441,21 +441,29 @@
                 <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;">
                     <input type="text" id="search-query" placeholder="Enter movie title" />
                     <button class="search">Search</button>
-                    <button class="index">Back</button> <!-- Botón Back agregado -->
+                    <button class="index">Back</button>
                 </div>
                 <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
             `;
+        
             results.forEach(movie => {
+                const sanitizedMovie = JSON.stringify({
+                    id: movie.id || null,
+                    title: movie.title || "Unknown",
+                    poster_path: movie.poster_path || null
+                });
+        
                 view += `
                     <div class="movie-result" style="margin: 10px; border: 1px solid #ccc; padding: 10px; width: 200px; text-align: center;">
                         <img src="https://image.tmdb.org/t/p/w200${movie.poster_path || ""}" 
                              alt="${movie.title}" style="width: 100%; height: auto;" />
                         <h3>${movie.title}</h3>
                         <p>Release Date: ${movie.release_date || "N/A"}</p>
-                        <button class="add-from-api" data-movie='${JSON.stringify(movie)}'>Add</button>
+                        <button class="add-from-api" data-movie='${sanitizedMovie}'>Add</button>
                     </div>
                 `;
             });
+        
             view += `</div>`;
             document.getElementById('main').innerHTML = view; 
         };
@@ -465,12 +473,21 @@
             const movie = JSON.parse(movieData);
             let my_movies = JSON.parse(localStorage.my_movies || "[]");
         
-            if (my_movies.some(m => m.title === movie.title)) {
+            // Verifica si los datos necesarios están disponibles
+            if (!movie.id || !movie.title) {
+                alert("Cannot add this movie because some necessary data is missing.");
+                return;
+            }
+        
+            // Verifica si la película ya existe en base al id
+            if (my_movies.some(m => m.id === movie.id)) {
                 alert("This movie is already in your database.");
                 return;
             }
         
+            // Crea el nuevo objeto de película con manejo de campos opcionales
             const newMovie = {
+                id: movie.id,
                 title: movie.title,
                 director: "Unknown", // TMDb no proporciona director
                 thumbnail: movie.poster_path 
@@ -487,7 +504,7 @@
 
         // End nuevo
 
-
+    
 
         // EVENT ROUTER
         const matchEvent = (ev, sel) => ev.target.matches(sel);
@@ -503,7 +520,14 @@
             else if (matchEvent(ev, '.delete')) deleteContr(myId(ev));
             else if (matchEvent(ev, '.reset')) resetContr();
             else if (matchEvent(ev, '.search')) searchContr();
-            else if (matchEvent(ev, '.add-from-api')) addFromAPIContr(ev.target.dataset.movie);
+            else if (matchEvent(ev, '.add-from-api')) {
+                const movieData = ev.target.dataset.movie;
+                if (!movieData) {
+                    alert("Error: Could not retrieve movie data. Please try again.");
+                    return;
+                }
+                addFromAPIContr(movieData);
+            }
             else if (matchEvent(ev, '.search-view')) {
                 document.getElementById('main').innerHTML = searchView();
             }
